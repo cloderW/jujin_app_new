@@ -3,6 +3,9 @@
 import 'package:jujin_app_news/model/jujin_flash_live.dart';
 import 'package:jujin_app_news/model/jujin_flash.dart';
 
+import 'package:jujin_app_news/model/jujin_calender_live.dart';
+import 'package:jujin_app_news/model/jujin_calender.dart';
+
 enum Environment { mock, production }
 
 class Injector {
@@ -29,6 +32,16 @@ class Injector {
     }
   }
 
+
+  CalenderRepository get calenderRepository {
+    switch (_environment) {
+      case (Environment.mock):
+        return new LiveCalenderRepository();
+      case (Environment.production):
+      default:
+        return new LiveCalenderRepository();
+    }
+  }
 
 
 }

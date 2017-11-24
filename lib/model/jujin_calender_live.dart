@@ -3,14 +3,14 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:jujin_app_news/model/fetch_exception.dart';
-import 'package:jujin_app_news/model/jujin_flash.dart';
+import 'package:jujin_app_news/model/jujin_calender.dart';
 
 const JsonCodec jsonCodec = const JsonCodec();
 
-class LiveFlashRepository extends FlashRepository {
+class LiveCalenderRepository extends CalenderRepository {
   @override
-  Future<Flash> fetch(String page,String num) async {
-    String _fetchUrl='https://cj.jujin8.com/kx?page=$page&num=$num';
+  Future<Calender> fetch(String date) async {
+    String _fetchUrl='https://cj.jujin8.com/fedata?date=$date&country=&rele=&type=0';
 
     final response = await http.get(_fetchUrl);
     final statusCode = response.statusCode;
@@ -22,9 +22,9 @@ class LiveFlashRepository extends FlashRepository {
 
     final Map<String, dynamic> result=jsonCodec.decode(response.body);
 
-    FlashData flashData=new FlashData(result);
+    CalenderData calenderData=new CalenderData(result);
 
-    return new Flash.fromList(flashData.value);
+    return new Calender.fromList(calenderData.value);
 
   }
 }

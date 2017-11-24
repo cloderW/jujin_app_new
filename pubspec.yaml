@@ -1,6 +1,8 @@
 name: jujin_app_news
 description: A new Flutter project.
 
+
+
 dependencies:
   flutter:
     sdk: flutter
@@ -27,6 +29,25 @@ flutter:
   # included with your application, so that you can use the icons in
   # the Icons class.
   uses-material-design: true
+  assets:
+   - images/美国.png
+   - images/澳大利亚.png
+   - images/德国.png
+   - images/法国.png
+   - images/韩国.png
+   - images/加拿大.png
+   - images/欧元区.png
+   - images/日本.png
+   - images/瑞士.png
+   - images/台湾.png
+   - images/西班牙.png
+   - images/希腊.png
+   - images/香港.png
+   - images/新加坡.png
+   - images/新西兰.png
+   - images/意大利.png
+   - images/英国.png
+   - images/中国.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

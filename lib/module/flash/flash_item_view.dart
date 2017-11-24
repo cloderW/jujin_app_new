@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:jujin_app_news/app_configuration.dart';
 import 'package:jujin_app_news/model/jujin_flash.dart';
@@ -18,13 +16,10 @@ class ItemTile extends StatefulWidget {
 class ItemTileState extends State<ItemTile> {
 
   FlashItem _item;
-
   ItemTileState(FlashItem item
       ) {
-
     _item=item;
   }
-
   @override
   void initState() {
     super.initState();
@@ -54,9 +49,6 @@ class ItemTileState extends State<ItemTile> {
           ),
         ),
       ),
-
-
-
     );
   }
 
@@ -80,8 +72,6 @@ class ItemTileState extends State<ItemTile> {
           style: textTheme.caption,
         ));
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,27 +97,19 @@ class ItemTileState extends State<ItemTile> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         child: new Row(
             children: <Widget>[
-
            new Container(
               padding: const EdgeInsets.only(right: 10.0,top: 5.0),
               child: new Column(
                 children: badgeChildren,
-
               ),
-
             ),
-
           new Expanded(
             flex: 6,
             child: itemColumn,
           ),
         ],
-
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
-
-
-
       ),
     );
   }

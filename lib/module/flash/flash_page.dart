@@ -6,7 +6,6 @@ import 'package:jujin_app_news/app_configuration.dart';
 import 'package:jujin_app_news/model/jujin_flash.dart';
 
 import 'package:jujin_app_news/module/flash/flash_item_view.dart';
-import 'package:jujin_app_news/common/notifications.dart';
 import 'flash_presenter.dart';
 
 class FlashPage extends StatefulWidget {
@@ -32,16 +31,12 @@ class FlashPageState extends State<FlashPage>
 
   Flash _stories;
   int _storyCount;
-  int _selectedNavIndex;
   bool _forceReloadOnRefresh;
 
   FlashPageState() {
     _presenter = new FlashListPresenter(this);
-
     _stories = new Flash(flashList: <FlashItem>[]);
     _storyCount = 0;
-    _selectedNavIndex = 0;
-
     // If not refreshed by navChange, ignore story cache
     _forceReloadOnRefresh = true;
   }
@@ -49,8 +44,6 @@ class FlashPageState extends State<FlashPage>
   @override
   void initState() {
     super.initState();
-    // Show RefreshIndicator
-    // This will call onRefresh() method and load stories
     final load = new Future<Null>.value(null);
     load.then((_) {
       _refreshIndicatorKey.currentState.show();
@@ -91,14 +84,12 @@ class FlashPageState extends State<FlashPage>
       ),
     );
     return refreshIndicator;
-
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
-
       body: _buildBody(context),
     );
   }
@@ -114,6 +105,5 @@ class FlashPageState extends State<FlashPage>
     _presenter.loadFlash(currentPage.toString(),pageSize.toString(), _forceReloadOnRefresh);
 
   }
-
 
 }

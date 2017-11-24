@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jujin_app_news/module/flash/flash_page.dart';
+import 'package:jujin_app_news/module/calender/calender_page.dart';
 import 'package:jujin_app_news/app_configuration.dart';
 
 class MainPage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _MainPageState extends State<MainPage> {
             children: [
               new FlashPage(widget.configuration,widget.updater),
               new FlashPage(widget.configuration,widget.updater),
-              new FlashPage(widget.configuration,widget.updater),
+              new CalendarPage(widget.configuration,widget.updater),
             ],
             controller: pageController,
             onPageChanged: onPageChanged
@@ -43,13 +44,13 @@ class _MainPageState extends State<MainPage> {
         bottomNavigationBar: new BottomNavigationBar(
             items: [
               new BottomNavigationBarItem(
-                icon: new Icon(new IconData(62008, fontFamily: "mdi")),
+                icon: new Icon(Icons.stars),
                 title: new Text("快讯"),
               ),
               new BottomNavigationBarItem(
-                  icon: new Icon(Icons.location_on), title: new Text("资讯")),
+                  icon: new Icon(Icons.fiber_new), title: new Text("资讯")),
               new BottomNavigationBarItem(
-                  icon: new Icon(Icons.people), title: new Text("日历"))
+                  icon: new Icon(Icons.calendar_today), title: new Text("日历"))
             ],
             onTap: onTap,
             currentIndex: page
@@ -113,7 +114,6 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildDrawer(BuildContext context) {
 
-    if(this.page==0){
       return new Drawer(
         child: new ListView(
           children: <Widget>[
@@ -130,30 +130,6 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       );
-
-    }else{
-
-      return new Drawer(
-        child: new ListView(
-          children: <Widget>[
-            new DrawerHeader(
-                child: new Center(
-                    child: new Text("选择"))),
-            new ListTile(
-              title: const Text('数据 事件'),
-              trailing: new Switch(
-                value: widget.configuration.themeName == ThemeName.dark,
-                onChanged: _handleThemeChange,
-              ),
-            ),
-          ],
-        ),
-      );
-
-    }
-
-
-
 
 
 

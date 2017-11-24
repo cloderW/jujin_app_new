@@ -12,7 +12,6 @@ class FlashItem {
   String body;
   String created_at;
   String updated_at;
-
   String source_site;
 
   FlashItem({
@@ -28,25 +27,21 @@ class FlashItem {
 }
 
 class FlashData {
-
   int success;
-
   List<FlashItem> value;
-
   FlashData(Map<String, dynamic> map) {
     this.success = map["success"];
     List<Map<String, dynamic>> list = map["value"];
     List<FlashItem> values = new List();
     for (int i = 0; i < list.length; i++) {
-      Map<String, dynamic> map1 = list[i];
-      FlashItem flashItem = new FlashItem(id: map1["id"],body: map1["body"],source_site: map1["source_site"],
-          publish_time: map1["publish_time"]);
+      Map<String, dynamic> value = list[i];
+      FlashItem flashItem = new FlashItem(id: value["id"],body: value["body"],
+          source_site: value["source_site"], publish_time: value["publish_time"]);
       values.add(flashItem);
     }
     this.value = values;
   }
 }
-
 
 class Flash {
 
@@ -58,14 +53,10 @@ class Flash {
 
 }
 
-
-
 abstract class FlashRepository {
   static final _cache = <String,Flash>{};
-
   // Abstract method to be defined in implementations
   Future<Flash> fetch(String page,String num);
-
   Future<Flash> load(String page,String num,
       [bool forceReload = false]) async {
 
