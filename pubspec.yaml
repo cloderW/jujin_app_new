@@ -6,17 +6,18 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
-#  url_launcher:
+ # url_launcher:
 #  timeago:
   shared_preferences:
 #  intl:
 #  intl_translation:
 #  html_unescape:
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
 
 
 # For information on the generic Dart part of this file, see the

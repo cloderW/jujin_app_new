@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:jujin_app_news/app_configuration.dart';
 import 'package:jujin_app_news/model/jujin_flash.dart';
 
-
 class ItemTile extends StatefulWidget {
   final AppConfiguration configuration;
   final FlashItem item;
+
+
 
   ItemTile(this.item, this.configuration);
 
@@ -14,32 +15,29 @@ class ItemTile extends StatefulWidget {
 }
 
 class ItemTileState extends State<ItemTile> {
-
   FlashItem _item;
-  ItemTileState(FlashItem item
-      ) {
-    _item=item;
+  ItemTileState(FlashItem item) {
+    _item = item;
   }
   @override
   void initState() {
     super.initState();
-
   }
 
-  Widget _buildBadge(String count, Color backgroundColor, TextTheme textTheme,double width,double height) {
+  final _scaffoldKey = new GlobalKey<ItemTileState>();
+
+  Widget _buildTime(String count, Color backgroundColor, TextTheme textTheme) {
     final textStyle = textTheme.caption.copyWith(
       color: Colors.white,
       fontSize: 10.0,
     );
     return new Container(
-      margin: const EdgeInsets.only(bottom: 2.0),
-      width:  width,
-      height: height,
+      width: 60.0,
+      height: 20.0,
       decoration: new BoxDecoration(
-        color: backgroundColor,
-        shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(12.5)
-      ),
+          color: backgroundColor,
+          shape: BoxShape.rectangle,
+          borderRadius: new BorderRadius.circular(10.0)),
       child: new Container(
         padding: const EdgeInsets.all(2.0),
         child: new Center(
@@ -52,9 +50,8 @@ class ItemTileState extends State<ItemTile> {
     );
   }
 
-  Widget _buildTop(TextTheme textTheme) {
+  Widget _buildContent(TextTheme textTheme) {
     final children = <TextSpan>[];
-
     return new RichText(
       text: new TextSpan(
         text: '${_item.body}',
@@ -73,6 +70,41 @@ class ItemTileState extends State<ItemTile> {
         ));
   }
 
+  _buildBadge(Color backgroundColor, TextTheme textTheme) {
+    return new Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        new Row(
+          children: <Widget>[
+            new Container(
+              margin: const EdgeInsets.only(top: 5.0),
+              width: 10.0,
+              height: 10.0,
+              decoration: new BoxDecoration(
+                color: backgroundColor,
+                shape: BoxShape.circle,
+
+              ),
+            ),
+            new Container(
+              margin: const EdgeInsets.only(top: 5.0),
+              width: 20.0,
+              height: 1.0,
+              decoration: new BoxDecoration(
+                color: backgroundColor,
+                shape: BoxShape.rectangle,
+              ),
+            )
+          ],
+        ),
+
+
+
+
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -80,34 +112,34 @@ class ItemTileState extends State<ItemTile> {
     final textTheme = theme.textTheme;
 
     final badgeChildren = <Widget>[
-      _buildBadge("", Colors.orange, textTheme,10.0,10.0),
+      _buildBadge(Colors.orange, textTheme),
     ];
 
     final itemColumn = new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _buildBadge(_item.publish_time.substring(10), Colors.orange, textTheme,60.0,20.0),
-          _buildTop(textTheme),
+          _buildTime(
+              _item.publish_time.substring(10), Colors.orange, textTheme),
+          _buildContent(textTheme),
           _buildText('by ${_item.source_site}', textTheme)
-
         ]);
 
     return new InkWell(
       child: new Container(
+        key: _scaffoldKey,
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         child: new Row(
-            children: <Widget>[
-           new Container(
-              padding: const EdgeInsets.only(right: 10.0,top: 5.0),
-              child: new Column(
+          children: <Widget>[
+            new FittedBox(
+                child: new Column(
                 children: badgeChildren,
               ),
             ),
-          new Expanded(
-            flex: 6,
-            child: itemColumn,
-          ),
-        ],
+            new Expanded(
+              flex: 1,
+              child: itemColumn,
+            ),
+          ],
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jujin_app_news/app_configuration.dart';
 import 'package:jujin_app_news/injection/dependency_injection.dart';
 import 'package:jujin_app_news/main_page.dart';
+import 'package:jujin_app_news/module/article/article_detail_view.dart';
 
 void main() {
   // Injector for selecting data source: Environment.production or Environment.mock
@@ -24,6 +25,7 @@ class JujinNewsAppState extends State<JujinNewsApp> {
     showFullComment: false,
     expandCommentTree: false,
   );
+
 
   @override
   void initState() {
@@ -65,7 +67,7 @@ class JujinNewsAppState extends State<JujinNewsApp> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       theme: theme,
-      home: new MainPage(_configuration, configurationUpdater),
+       home: new MainPage(_configuration, configurationUpdater),
     );
   }
 }

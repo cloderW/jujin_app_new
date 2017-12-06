@@ -6,6 +6,12 @@ import 'package:jujin_app_news/model/jujin_flash.dart';
 import 'package:jujin_app_news/model/jujin_calender_live.dart';
 import 'package:jujin_app_news/model/jujin_calender.dart';
 
+import 'package:jujin_app_news/model/jujin_article.dart';
+import 'package:jujin_app_news/model/jujin_article_live.dart';
+
+import 'package:jujin_app_news/model/jujin_article_detail.dart';
+import 'package:jujin_app_news/model/jujin_article_detail_live.dart';
+
 enum Environment { mock, production }
 
 class Injector {
@@ -43,6 +49,25 @@ class Injector {
     }
   }
 
+  ArticleRepository get articleRepository {
+    switch (_environment) {
+      case (Environment.mock):
+        return new LiveArticleRepository();
+      case (Environment.production):
+      default:
+        return new LiveArticleRepository();
+    }
+  }
+
+  ArticleDetailRepository get articleDetailRepository {
+    switch (_environment) {
+      case (Environment.mock):
+        return new LiveArticleDetailRepository();
+      case (Environment.production):
+      default:
+        return new LiveArticleDetailRepository();
+    }
+  }
 
 }
 

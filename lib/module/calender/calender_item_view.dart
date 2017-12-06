@@ -69,7 +69,6 @@ class ItemTileState extends State<ItemTile> {
     );
   }
 
-
   Widget _buildStar(String import) {
     switch(import){
       case "0":
@@ -163,8 +162,6 @@ class ItemTileState extends State<ItemTile> {
       ),
     );
   }
-
-
 
   Widget _buildContent(String content,TextTheme textTheme) {
     final children = <TextSpan>[];

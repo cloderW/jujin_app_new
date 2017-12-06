@@ -3,25 +3,27 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:jujin_app_news/app_configuration.dart';
-import 'package:jujin_app_news/model/jujin_flash.dart';
+import 'package:jujin_app_news/model/jujin_article.dart';
+import 'package:jujin_app_news/module/article/article_item_view.dart';
 
-import 'package:jujin_app_news/module/flash/flash_item_view.dart';
-import 'flash_presenter.dart';
+import 'article_presenter.dart';
 
-class FlashPage extends StatefulWidget {
+class ArticleList extends StatefulWidget {
 
-  const FlashPage(this.configuration, this.updater);
+  const ArticleList(this.configuration, this.updater,this.cat);
 
   final AppConfiguration configuration;
   final ValueChanged<AppConfiguration> updater;
 
+  final String cat;
+
   @override
-  FlashPageState createState() => new FlashPageState();
+  ArticleListState createState() => new ArticleListState(cat);
 
 }
 
-class FlashPageState extends State<FlashPage>
-    implements FlashListViewContract {
+class ArticleListState extends State<ArticleList>
+    implements ArticleListViewContract {
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 
@@ -29,18 +31,21 @@ class FlashPageState extends State<FlashPage>
 
   int currentPage=1;
   int pageSize=20;
-  FlashListPresenter _presenter;
+  ArticleListPresenter _presenter;
 
-  Flash _stories;
+  Article _stories;
   int _storyCount;
   bool _forceReloadOnRefresh;
+  String _cat;
 
-  FlashPageState() {
-    _presenter = new FlashListPresenter(this);
-    _stories = new Flash(flashList: <FlashItem>[]);
+  ArticleListState(String cat) {
+    _presenter = new ArticleListPresenter(this);
+    _stories = new Article(articleList: <ArticleItem>[]);
     _storyCount = 0;
+
     // If not refreshed by navChange, ignore story cache
     _forceReloadOnRefresh = true;
+    _cat=cat;
   }
 
   @override
@@ -53,40 +58,45 @@ class FlashPageState extends State<FlashPage>
   }
 
   @override
-  void onLoadFlashComplete(Flash flash) {
+  void onLoadArticleComplete(Article article) {
     if (mounted) {
       setState(() {
-        _stories.flashList.addAll(flash.flashList);
-        _storyCount = _stories.flashList.length;
+        _stories.articleList.addAll(article.articleList);
+        _storyCount = _stories.articleList.length;
       });
     }
   }
 
   @override
-  void onLoadFlashError() {
+  void onLoadArticleError() {
     // TODO: implement onLoadStoriesError
   }
 
   Widget _buildBody(BuildContext context) {
-    final padding = const EdgeInsets.all(8.0);
     RefreshIndicator refreshIndicator= new RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _onRefresh,
       child: new ListView.builder(
-        padding: padding,
         itemCount: _storyCount,
         itemBuilder: (BuildContext context, int index) {
-          if(index+1==_stories.flashList.length){
-             currentPage=(_stories.flashList.length/pageSize).floor()+1;
-             _presenter.loadFlash(currentPage.toString(),pageSize.toString(), _forceReloadOnRefresh);
+          if(index+1==_stories.articleList.length){
+            currentPage=(_stories.articleList.length/pageSize).floor()+1;
+            _presenter.loadArticle(currentPage.toString(),pageSize.toString(), _cat,_forceReloadOnRefresh);
           }
-          FlashItem flash = _stories.flashList[index];
-          return new ItemTile(flash, widget.configuration);
+          ArticleItem article = _stories.articleList[index];
+          return new ItemTile(article, widget.configuration,widget.updater);
         },
       ),
     );
     return refreshIndicator;
   }
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,13 +108,13 @@ class FlashPageState extends State<FlashPage>
 
   Future<Null> _onRefresh() async {
 
-    _stories.flashList.clear();
+    _stories.articleList.clear();
 
     _storyCount=0;
 
     currentPage=1;
 
-    _presenter.loadFlash(currentPage.toString(),pageSize.toString(), _forceReloadOnRefresh);
+    _presenter.loadArticle(currentPage.toString(),pageSize.toString(), _cat,_forceReloadOnRefresh);
 
   }
 

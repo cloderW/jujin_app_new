@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jujin_app_news/app_configuration.dart';
 import 'package:jujin_app_news/model/jujin_calender.dart';
-
 import 'package:jujin_app_news/module/calender/calender_item_view.dart';
-
 import 'calender_presenter.dart';
 
 class CalendarPage extends StatefulWidget {

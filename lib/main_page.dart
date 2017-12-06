@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jujin_app_news/module/flash/flash_page.dart';
 import 'package:jujin_app_news/module/calender/calender_page.dart';
 import 'package:jujin_app_news/app_configuration.dart';
+import 'package:jujin_app_news/module/article/article_page.dart';
 
 class MainPage extends StatefulWidget {
 
@@ -35,7 +36,7 @@ class _MainPageState extends State<MainPage> {
         body: new PageView(
             children: [
               new FlashPage(widget.configuration,widget.updater),
-              new FlashPage(widget.configuration,widget.updater),
+              new ArticlePage(widget.configuration,widget.updater),
               new CalendarPage(widget.configuration,widget.updater),
             ],
             controller: pageController,
@@ -44,8 +45,7 @@ class _MainPageState extends State<MainPage> {
         bottomNavigationBar: new BottomNavigationBar(
             items: [
               new BottomNavigationBarItem(
-                icon: new Icon(Icons.stars),
-                title: new Text("快讯"),
+                  icon: new Icon(Icons.stars), title: new Text("快讯"),
               ),
               new BottomNavigationBarItem(
                   icon: new Icon(Icons.fiber_new), title: new Text("资讯")),
@@ -102,16 +102,6 @@ class _MainPageState extends State<MainPage> {
   }
 
 
-
-  void _handleCalanderChange(bool data) {
-    final theme = data ? ThemeName.dark : ThemeName.light;
-    storeThemeToPrefs(theme);
-
-    if (widget.updater != null)
-      widget.updater(widget.configuration.copyWith(themeName: theme));
-  }
-
-
   Widget _buildDrawer(BuildContext context) {
 
       return new Drawer(
@@ -121,7 +111,7 @@ class _MainPageState extends State<MainPage> {
                 child: new Center(
                     child: new Text("设置"))),
             new ListTile(
-              title: const Text('Night mode'),
+              title: const Text('夜间模式'),
               trailing: new Switch(
                 value: widget.configuration.themeName == ThemeName.dark,
                 onChanged: _handleThemeChange,
